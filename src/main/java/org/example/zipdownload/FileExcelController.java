@@ -33,8 +33,6 @@ public class FileExcelController {
                 accounts.add(Account.builder().acctno(String.valueOf(i*pivot+j)).name("페이"+i).acctholder("kain"+i).build());
             }
 
-            System.out.println(i+"번째");
-            System.out.println(accounts);
             wb = new XSSFWorkbook();
             sheet = wb.createSheet("첫번째 시트");
             Row row = null;

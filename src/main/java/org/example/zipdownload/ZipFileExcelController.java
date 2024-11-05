@@ -40,8 +40,6 @@ public class ZipFileExcelController {
                 accounts.add(Account.builder().acctno(String.valueOf(i*pivot+j)).name("페이"+i).acctholder("kain"+i).build());
             }
 
-            System.out.println(i+"번째");
-            System.out.println(accounts);
             wb = new XSSFWorkbook();
             sheet = wb.createSheet("첫번째 시트");
             Row row = null;
@@ -82,17 +80,9 @@ public class ZipFileExcelController {
         response.setContentType("application/zip");
         response.setHeader("Content-Disposition", "attachment; filename=\"alphabet.zip\""); // 변경된 부분
 
-
-//        List<File> goZip = new ArrayList<>();
-//        for (String file : fileNames){
-//            File excel = new File(path,file);
-//            goZip.add(excel);
-//        }
-
         File zipFile = new File(path,"temp.zip" );
         byte[] buf = new byte[4096];
-//        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile))) {  // 집 파일 다운로드
-        try (ZipOutputStream zipOut = new ZipOutputStream(response.getOutputStream())) {  // 스트리밍 방식으로 ZIP 파일을 직접 반환
+        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile))) {  // 집 파일 다운로드
             for (String fileName : fileNames) {
                 File excelFile = new File(path, fileName);
                 try (FileInputStream in = new FileInputStream(excelFile)) {
@@ -106,16 +96,33 @@ public class ZipFileExcelController {
                     zipOut.closeEntry();
                 }
                 // 엑셀 파일 삭제하는 로직
-//                if(excelFile.exists()){
-//                    if(excelFile.delete()){
-//                        System.out.println(excelFile.getName()+" 파일 삭제되었음");
-//                    }else{
-//                        System.out.println(excelFile.getName()+" 파일 삭제되지 않음");
-//                    }
-//                }
+                if(excelFile.exists()){
+                    if(excelFile.delete()){
+                        System.out.println(excelFile.getName()+" 파일 삭제되었음");
+                    }else{
+                        System.out.println(excelFile.getName()+" 파일 삭제되지 않음");
+                    }
+                }
             }
-//            zipOut.finish();
         }
+
+
+//        try (ZipOutputStream zipOut = new ZipOutputStream(response.getOutputStream())) {  // 스트리밍 방식으로 ZIP 파일을 직접 반환
+//            for (String fileName : fileNames) {
+//                File excelFile = new File(path, fileName);
+//                try (FileInputStream in = new FileInputStream(excelFile)) {
+//                    ZipEntry ze = new ZipEntry(excelFile.getName());
+//                    zipOut.putNextEntry(ze);
+//
+//                    int len;
+//                    while ((len = in.read(buf)) > 0) {
+//                        zipOut.write(buf, 0, len);
+//                    }
+//                    zipOut.closeEntry();
+//                }
+//            }
+//        }
+
 
     }
 }

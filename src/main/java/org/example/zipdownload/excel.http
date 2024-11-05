@@ -1,13 +1,8 @@
-### hello test
-GET http://localhost:8080/hello?hello='안녕'
-
-
-### ㅅㄷㄴㅅ
+### 엑셀 파일 다운로드
 GET http://localhost:8080/exceldown
 
-### ㅅㄷㄴㅅ
+### n개의 엑셀파일 생성하기
 GET http://localhost:8080/fileexceldown
 
-
-### ziptest
+### n개 파일 압축하기
 GET http://localhost:8080/zipfileexceldown

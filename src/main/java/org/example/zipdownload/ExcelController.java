@@ -26,16 +26,11 @@ import java.io.ByteArrayOutputStream;
 
 @RestController
 public class ExcelController {
-    @GetMapping("hello")
-    public String hello(String hello){
-        return hello;
-    }
     @GetMapping("exceldown")
     public void getExcel(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        System.out.println("test");
         List<Account> accounts = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            accounts.add(Account.builder().acctno("1234"+i).name("kaka"+i).acctholder("kain"+i).build());
+            accounts.add(Account.builder().acctno("10-112-1264"+i).name("pay-"+i).acctholder("khan-"+i).build());
         }
 
         Workbook wb = new XSSFWorkbook();
